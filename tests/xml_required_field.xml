@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ESAPrescription>
+    <Date>230228015607</Date>
+    <SenderID>8</SenderID>
+    <PatientDetail>
+        <Patient>
+            <PatientId>
+                <ReferenceNumber>369784</ReferenceNumber>
+                <UserId>19511</UserId>
+            </PatientId>
+            <PatientName>
+                <FirstName>First</FirstName>
+                <Surname>LastName</Surname>
+                <Title>Mr</Title>
+            </PatientName>
+            <DOB>16/04/1974</DOB>
+            <Sex>1</Sex>
+            <BMI>20.01</BMI>
+            <HomeAddress>
+                <CountryCode>GBR</CountryCode>
+                <PostCode>BL2 2HH</PostCode>
+                <AddressLine1>1b Darzei</AddressLine1>
+                <AddressLine2>1b Darzei</AddressLine2>
+                <AddressLine3>London</AddressLine3>
+                <AddressLine4>Loncon </AddressLine4>
+            </HomeAddress>
+            <DeliveryAddress>
+                <CountryCode>GBR</CountryCode>
+                <PostCode>BL2 2HH</PostCode>
+                <AddressLine1>1b Darzei</AddressLine1>
+                <AddressLine2>1b Darzei</AddressLine2>
+                <AddressLine3>London</AddressLine3>
+                <AddressLine4>Loncon </AddressLine4>
+            </DeliveryAddress>
+			<SaturdayDelivery>N</SaturdayDelivery>
+            <UPSAccessPointDelivery>N</UPSAccessPointDelivery>
+            <Telephone>0213149934</Telephone>
+            <Mobile>987987987</Mobile>
+            <Email>youemail@yopmail.com</Email>
+        </Patient>
+    </PatientDetail>
+    <Prescription>
+        <CommercialInvoiceValue>EUR 0</CommercialInvoiceValue>
+        <Repeats>0</Repeats>
+        <Prescriber>
+            <Doctor>
+                <RegistrationNo>4624794</RegistrationNo>
+                <DoctorName>Dr. Joe Doe</DoctorName>
+            </Doctor>
+        </Prescriber>
+        <Product>
+            <ProductCode>8882821</ProductCode>
+            <Description>sildenafil UK 25mg</Description>
+            <ProductQuantity>
+                <Quantity>1</Quantity>
+                <Units>Tablets</Units>
+                <Dosage>1</Dosage>
+            </ProductQuantity>
+            <Instructions>Take ONE tablet 1 hour prior to sexual activity. Do not take more than one tablet per day. Do not use any other type of medication for erectile dysfunction within 72 hours of taking Viagra.</Instructions>
+        </Product>
+        <Questionnaire>
+            <Question>Do you have any pre-condition?</Question>
+            <Answer>Not Declared</Answer>
+            <Question>Do you have an allergy?</Question>
+            <Answer>Not Declared</Answer>
+        </Questionnaire>
+    </Prescription>
+</ESAPrescription>

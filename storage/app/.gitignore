@@ -1,0 +1,11 @@
+*
+!public/
+!.gitignore
+!signatures/
+!app/
+!executables/
+!invoices/
+!files/
+!ocs/
+!xml/
+!ups_xml/

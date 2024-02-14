@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ESAPrescription>
+	<Date>1692961474</Date>
+	<SenderID>8</SenderID>
+	<PatientDetail>
+		<Patient>
+			<PatientId>
+				<ReferenceNumber>1780</ReferenceNumber>
+				<UserId>5</UserId>
+			</PatientId>
+			<PatientName>
+				<FirstName>Joe</FirstName>
+				<Surname>Doe</Surname>
+				<Title>Dr</Title>
+			</PatientName>
+			<DOB>16/04/1974</DOB>
+			<Sex>1</Sex>
+			<HomeAddress>
+				<CountryCode>NL</CountryCode>
+				<PostCode>BL2 2HH</PostCode>
+				<AddressLine1>1b Darzei</AddressLine1>
+				<AddressLine2>1b Darzei</AddressLine2>
+				<AddressLine3>Loncon</AddressLine3>
+				<AddressLine4 />
+			</HomeAddress>
+			<DeliveryAddress>
+				<CountryCode>NL</CountryCode>
+				<PostCode>03000</PostCode>
+				<AddressLine1>Pg. de Gràcia</AddressLine1>
+				<AddressLine2>Álava</AddressLine2>
+				<AddressLine3>Vi</AddressLine3>
+				<AddressLine4 />
+			</DeliveryAddress>
+			<SaturdayDelivery>N</SaturdayDelivery>
+            <UPSAccessPointDelivery>N</UPSAccessPointDelivery>
+			<Telephone>0987987987</Telephone>
+			<Mobile>0987987987</Mobile>
+			<Email>james@refinegroup.co.uk</Email>
+		</Patient>
+	</PatientDetail>
+	<Prescription>
+		<CommercialInvoiceValue>EUR 50</CommercialInvoiceValue>
+		<Repeats/>
+		<PrescriptionNotes> </PrescriptionNotes>
+		<Prescriber>
+			<Doctor>
+				<RegistrationNo>4624794</RegistrationNo>
+			</Doctor>
+		</Prescriber>
+		<Product>
+			<ProductCode>RC5643422</ProductCode>
+			<Description>Eloquence Deep</Description>
+			<ProductQuantity>
+                <Quantity>1</Quantity>
+                <Units>Tablets</Units>
+                <Dosage>1</Dosage>
+            </ProductQuantity>
+			<Instructions>test directions/ should be in xml</Instructions>
+		</Product>
+		<Questionnaire>
+			<Question>
+			 I can confirm a face to face consultation (aesthetic prescription)
+			</Question>
+			<Answer>
+				Yes
+			</Answer>
+			<Question>
+			 I can confirm that this prescription is for the named patient only
+			</Question>
+			<Answer>
+				Yes
+			</Answer>
+		</Questionnaire>
+	</Prescription>
+</ESAPrescription>
