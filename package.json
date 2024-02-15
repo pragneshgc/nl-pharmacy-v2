@@ -23,6 +23,7 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.1",
     "mitt": "^3.0.1",
+    "pinia": "^2.1.7",
     "vue": "^3.4.15",
     "vue-loader": "^17.3.1"
   },

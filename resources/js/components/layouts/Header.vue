@@ -11,7 +11,7 @@
                 </button>
             </div>
         </form>
-        
+
         <div class="user">
             <ul>
                 <li @dblclick="switchStyle()" style="user-select: none;">
@@ -58,109 +58,115 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
+import { storeToRefs } from "pinia";
 import axios from 'axios';
+import mitt from 'mitt';
+import { useDefaultStore } from '../../stores/default';
 
-const userInfo = ref(userInfo);
+const emitter = mitt();
+
+const { changeStyle } = useDefaultStore();
+
 const orderID = ref('');
 const refNo = ref('');
 const messageCount = ref(0);
 
 const currentRouteName = computed(() => {
-  return $route.value.name;
+    return $route.value.name;
 });
 
 const switchStyle = () => {
-  let style = 'default-style';
+    let style = 'default-style';
 
-  if ($store.state.style == 'default-style') {
-    style = 'redesign-style';
-  }
+    if ($store.state.style == 'default-style') {
+        style = 'redesign-style';
+    }
 
-  $store.commit('changeStyle', style);
-  localStorage.setItem('interfacestyle', style);
+    changeStyle(style);
+    localStorage.setItem('interfacestyle', style);
 };
 
 const search = () => {
-  if (orderID.value == '' && refNo.value != '') {
-    getOrderID(refNo.value, () => {
-      if (Array.isArray(orderID.value)) {
-        $root.emit('showduplicates', { duplicateReference: refNo.value });
-        postError(`Duplicate orders for reference number ${refNo.value} found. Displaying orders.`);
-        orderID.value = '';
-        refNo.value = '';
-      } else {
+    if (orderID.value == '' && refNo.value != '') {
+        getOrderID(refNo.value, () => {
+            if (Array.isArray(orderID.value)) {
+                $root.emit('showduplicates', { duplicateReference: refNo.value });
+                postError(`Duplicate orders for reference number ${refNo.value} found. Displaying orders.`);
+                orderID.value = '';
+                refNo.value = '';
+            } else {
+                $router.push({ name: 'prescription', params: { id: orderID.value } });
+                orderID.value = '';
+                refNo.value = '';
+            }
+        });
+    } else {
+        emitter.emit('prescriptionloading');
         $router.push({ name: 'prescription', params: { id: orderID.value } });
         orderID.value = '';
         refNo.value = '';
-      }
-    });
-  } else {
-    $root.emit('prescriptionloading');
-    $router.push({ name: 'prescription', params: { id: orderID.value } });
-    orderID.value = '';
-    refNo.value = '';
-  }
+    }
 };
 
 const getOrderID = (refNo, cb) => {
-  axios.get('/order/reference/' + refNo)
-    .then((response) => {
-      orderID.value = response.data.data;
-      cb();
-    })
-    .catch((error) => {
-      postError(`No orders for reference number ${refNo} found!`);
-    });
+    axios.get('/order/reference/' + refNo)
+        .then((response) => {
+            orderID.value = response.data.data;
+            cb();
+        })
+        .catch((error) => {
+            postError(`No orders for reference number ${refNo} found!`);
+        });
 };
 
 const logout = () => {
-  window.loggingOut = true;
+    window.loggingOut = true;
 
-  axios.post('/logs/page-exit')
-    .then((response) => {
-      axios.post('/logout')
+    axios.post('/logs/page-exit')
         .then((response) => {
-          location.replace('/login');
+            axios.post('/logout')
+                .then((response) => {
+                    location.replace('/login');
+                })
+                .catch((error) => {
+                    postError(error);
+                });
         })
         .catch((error) => {
-          postError(error);
+            postError(error);
         });
-    })
-    .catch((error) => {
-      postError(error);
-    });
 };
 
 const getAlertNotifications = () => {
-  axios.get('/dashboard/alerts-count')
-    .then((response) => {
-      messageCount.value = response.data.data;
-    })
-    .catch((error) => {
-      postError(error.response.data.message);
-    });
+    axios.get('/dashboard/alerts-count')
+        .then((response) => {
+            messageCount.value = response.data.data;
+        })
+        .catch((error) => {
+            postError(error.response.data.message);
+        });
 };
 
 const viewAlerts = () => {
-  if (currentRouteName.value == 'in tray' || currentRouteName.value == 'dashboard') {
-    $root.emit('changefilter', { filter: 'ordercount' });
-  } else {
-    localStorage.setItem('dashboard.orderFilter', 'ordercount');
-    $router.push({ name: 'in tray' });
-  }
+    if (currentRouteName.value == 'in tray' || currentRouteName.value == 'dashboard') {
+        emitter.emit('changefilter', { filter: 'ordercount' });
+    } else {
+        localStorage.setItem('dashboard.orderFilter', 'ordercount');
+        $router.push({ name: 'in tray' });
+    }
 };
 
 onMounted(() => {
-  getAlertNotifications();
-  $root.on('orderupdate', getAlertNotifications);
-  $root.on('alertupdate', () => {
     getAlertNotifications();
-  });
+    emitter.on('orderupdate', getAlertNotifications);
+    emitter.on('alertupdate', () => {
+        getAlertNotifications();
+    });
 });
 
 onBeforeUnmount(() => {
-  $root.off('alertupdate', () => {
-    getAlertNotifications();
-  });
-});  
+    emitter.off('alertupdate', () => {
+        getAlertNotifications();
+    });
+});
 </script>
