@@ -22,43 +22,74 @@
 </template>
 
 <script>
-    export default {
-        props: ['modalName', 'modalClass'],
-        data: function () {
-            return {
-                show: {
-                    modal: false,
-                },
-                loading: true
-            }
-        },
-        computed:{
-            
-        },
-        mounted() {
-            this.$root.$on('modal.open', (name) => {
-                if(name == this.modalName){
-                    this.show.modal = true;
-                }
-            });
 
-            this.$root.$on('modal.close', (name) => {
-                if(name == this.modalName){
-                    this.show.modal = false;
-                }
-            });
+ import { ref, onMounted, onUnmounted } from 'vue';
 
-            this.$root.$on('modal.close.all', () => {
-                    this.show.modal = false;
-            });
-        },
-        methods:{
-            close(){
-                this.show.modal = false;
-            },
-            save(){
-                this.show.modal = false;
-            }
-        }
-    }
+export default {
+  props: ['modalName', 'modalClass'],
+  setup(props) {
+    const show = ref({
+      modal: false
+    });
+    const loading = ref(true);
+
+    const close = () => {
+      show.value.modal = false;
+    };
+
+    const save = () => {
+      show.value.modal = false;
+    };
+
+    const openModal = (name) => {
+      if (name === props.modalName) {
+        show.value.modal = true;
+      }
+    };
+
+    const closeModal = (name) => {
+      if (name === props.modalName) {
+        show.value.modal = false;
+      }
+    };
+
+    const closeAllModals = () => {
+      show.value.modal = false;
+    };
+
+    onMounted(() => {
+      const modalOpenHandler = (name) => {
+        openModal(name);
+      };
+
+      const modalCloseHandler = (name) => {
+        closeModal(name);
+      };
+
+      const modalCloseAllHandler = () => {
+        closeAllModals();
+      };
+
+      // Register event listeners
+      window.addEventListener('modal.open', modalOpenHandler);
+      window.addEventListener('modal.close', modalCloseHandler);
+      window.addEventListener('modal.close.all', modalCloseAllHandler);
+
+      // Cleanup on component unmount
+      onUnmounted(() => {
+        window.removeEventListener('modal.open', modalOpenHandler);
+        window.removeEventListener('modal.close', modalCloseHandler);
+        window.removeEventListener('modal.close.all', modalCloseAllHandler);
+      });
+    });
+
+    return {
+      show,
+      loading,
+      close,
+      save
+    };
+  }
+};
+
 </script>

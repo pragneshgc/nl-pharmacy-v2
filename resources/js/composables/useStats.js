@@ -1,6 +1,6 @@
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { postError } from '../mixins/errors';
+// import { postError } from '../mixins/errors';
 import mitt from 'mitt';
 
 export function useStats() {

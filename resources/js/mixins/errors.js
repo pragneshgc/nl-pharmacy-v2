@@ -92,7 +92,7 @@ const postWarning = (response) => {
 }
 
 
-export {
+export default {
   reportError,
   postError,
   postErrorPopup,
